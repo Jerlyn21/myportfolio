@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jerlyn L. Viloria — Portfolio</title>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Georgia',serif}
+    :root{
+      --bg:#7B2CBF;
+      --paper:#FAF5FF;
+      --accent:#9D4EDD;
+      --dark:#2D0C5E;
+      --tape:#E0AAFF;
+      --sticker:#C77DFF;
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--dark);line-height:1.6;overflow-x:hidden}
+
+    /* Navigation */
+    nav{position:fixed;top:0;width:100%;background:rgba(123,44,191,0.95);z-index:999;padding:1rem 2rem}
+    .nav-links{display:flex;gap:2rem;list-style:none;justify-content:center;flex-wrap:wrap}
+    .nav-links a{color:white;text-decoration:none;font-weight:bold;transition:color 0.3s}
+    .nav-links a:hover{color:var(--tape)}
+
+    section{padding:6rem 2rem;max-width:900px;margin:0 auto}
+
+    /* Paper Card Style */
+    .paper{
+      background:var(--paper);
+      border-radius:4px;
+      padding:2.5rem;
+      margin-bottom:3rem;
+      position:relative;
+      box-shadow:6px 6px 0 rgba(0,0,0,0.15);
+      opacity:0;
+      transform:translateX(-50px);
+      transition:all 0.8s ease-out;
+    }
+    .paper.visible{
+      opacity:1;
+      transform:translateX(0);
+    }
+    .paper:nth-child(even){
+      transform:translateX(50px);
+    }
+    .paper:nth-child(even).visible{
+      transform:translateX(0);
+    }
+    .paper::before{
+      content:'';
+      position:absolute;
+      top:-10px;
+      left:50%;
+      transform:translateX(-50%);
+      width:80%;
+      height:20px;
+      background:linear-gradient(90deg,transparent,var(--tape),var(--tape),transparent);
+      opacity:0.8;
+      border-radius:2px;
+    }
+    .paper.hero-paper{
+      background:linear-gradient(180deg, #F3E8FF 0%, var(--paper) 100%);
+      border-top:4px dashed var(--accent);
+      transform:translateY(30px);
+    }
+    .paper.hero-paper.visible{
+      transform:translateY(0);
+    }
+    .sticker{
+      position:absolute;
+      background:var(--sticker);
+      color:white;
+      padding:0.4rem 1rem;
+      border-radius:4px;
+      font-weight:bold;
+      transform:rotate(-8deg);
+      box-shadow:2px 2px 0 rgba(0,0,0,0.1);
+    }
+    .paperclip{
+      position:absolute;
+      top:1rem;
+      right:1rem;
+      font-size:1.5rem;
+      color:var(--accent);
+      opacity:0.6;
+    }
+
+    /* Hero Section */
+    .hero-paper{text-align:center;padding-top:4rem}
+    .hero-paper .sticker{top:1rem;left:1rem}
+    .portfolio-title{
+      font-size:clamp(2.5rem,8vw,4rem);
+      font-style:italic;
+      color:var(--dark);
+      margin-bottom:0.5rem;
+    }
+    .name-display{
+      font-size:clamp(1.8rem,5vw,2.8rem);
+      font-weight:bold;
+      color:var(--bg);
+      margin-bottom:0.3rem;
+    }
+    .sub-name{
+      font-size:1.2rem;
+      color:var(--accent);
+      margin-bottom:1.5rem;
+    }
+    .years{
+      font-family:monospace;
+      background:var(--tape);
+      display:inline-block;
+      padding:0.3rem 1rem;
+      border-radius:4px;
+      margin-bottom:2rem;
+    }
+    .hero-content{display:grid;grid-template-columns:1fr 200px;gap:2rem;align-items:center}
+    .hero-img{
+      width:100%;
+      aspect-ratio:3/4;
+      border:4px solid white;
+      box-shadow:4px 4px 0 rgba(123,44,191,0.3);
+      overflow:hidden;
+      transform:rotate(3deg);
+    }
+    .hero-img img{width:100%;height:100%;object-fit:cover}
+
+    /* Section Headers */
+    .section-title{
+      font-size:clamp(2rem,6vw,3rem);
+      font-style:italic;
+      color:var(--bg);
+      margin-bottom:1.5rem;
+      border-bottom:2px solid var(--accent);
+      padding-bottom:0.5rem;
+      display:inline-block;
+    }
+
+    /* About */
+    .about-text p{margin-bottom:1rem;font-size:1.05rem}
+
+    /* Education */
+    .edu-card{background:var(--accent);color:white;padding:2rem;border-radius:8px;margin-top:1rem}
+    .edu-card h3{font-size:1.3rem;margin-bottom:0.5rem}
+
+    /* Skills */
+    .skill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:1rem}
+    .skill-item{background:var(--tape);padding:1rem;border-radius:4px;border-left:4px solid var(--bg);transition:transform 0.3s}
+    .skill-item:hover{transform:translateX(8px)}
+
+    /* Projects */
+    .project-card{background:white;padding:1.5rem;border-radius:4px;margin-bottom:1rem;border:1px solid var(--accent);transition:transform 0.3s}
+    .project-card:hover{transform:translateX(5px)}
+    .project-tag{display:inline-block;background:var(--sticker);color:white;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.8rem;margin:0.3rem 0.3rem 0.3rem 0}
+
+    /* Contact */
+    .contact-paper{background:var(--dark);color:white;text-align:center}
+    .contact-paper .section-title{color:var(--tape);border-bottom-color:var(--tape)}
+    .btn{display:inline-block;padding:0.8rem 2rem;background:var(--accent);color:white;text-decoration:none;border-radius:4px;font-weight:bold;margin:0.5rem;transition:transform 0.2s}
+    .btn:hover{transform:translateX(5px)}
+
+    /* Footer */
+    footer{text-align:center;padding:2rem;color:rgba(255,255,255,0.7)}
+
+    /* Responsive */
+    @media(max-width:600px){
+      .hero-content{grid-template-columns:1fr}
+      .hero-img{max-width:200px;margin:0 auto}
+      .paper{padding:1.5rem}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <ul class="nav-links">
+      <li><a href="#home">HOME</a></li>
+      <li><a href="#about">ABOUT</a></li>
+      <li><a href="#education">EDUCATION</a></li>
+      <li><a href="#skills">SKILLS</a></li>
+      <li><a href="#projects">PROJECTS</a></li>
+      <li><a href="#contact">CONTACT</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section id="home">
+    <div class="paper hero-paper">
+      <span class="sticker">CREATIVE</span>
+      <i class="fa fa-paperclip paperclip"></i>
+      
+      <h1 class="portfolio-title">Portfolio</h1>
+      <h2 class="name-display">Jerlyn L. Viloria</h2>
+      <p class="sub-name">Student & Creator</p>
+      <p class="years">2024 — 2025</p>
+      
+      <div class="hero-content">
+        <div class="about-text">
+          <p>Welcome to my portfolio! I'm <strong>Jerlyn L. Viloria</strong>, a dedicated student passionate about learning, creating, and growing in the field of technology and design.</p>
+          <p>I love turning ideas into beautiful and functional works — combining creativity with purpose.</p>
+          <a href="#about" class="btn">Get to know me ↓</a>
+        </div>
+        <div class="hero-img">
+          <img src="profile.jpg" alt="Jerlyn L. Viloria" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT SECTION -->
+  <section id="about">
+    <div class="paper">
+      <h2 class="section-title">I'm Jerlyn</h2>
+      <i class="fa fa-paperclip paperclip"></i>
+      
+      <div class="about-text">
+        <p>Hello! I'm <strong>Jerlyn L. Viloria</strong>. A student who believes that creativity and hard work can make anything possible.</p>
+        <p>I am currently pursuing my studies and building skills in various areas — from technology to creative design. Every project I take on is a chance to learn something new and improve my craft.</p>
+        <p>My goal is to grow, create meaningful work, and contribute something valuable to the world.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION SECTION -->
+  <section id="education">
+    <div class="paper">
+      <h2 class="section-title">Education</h2>
+      <i class="fa fa-paperclip paperclip"></i>
+      
+      <div class="edu-card">
+        <h3>🎓 Your School / University</h3>
+        <p><strong>Your Course / Program</strong></p>
+        <p style="margin-top:0.5rem;">Currently studying and developing skills in technology, design, and digital solutions.</p>
+        <p style="margin-top:0.5rem;font-style:italic;">Year: 2024 — Present</p>
+      </div>
+      
+      <div class="edu-card" style="margin-top:1rem;background:var(--sticker)">
+        <h3>📚 Achievements</h3>
+        <p>• Dedication to learning and continuous improvement</p>
+        <p>• Building projects and practical skills</p>
+        <p>• Passionate about personal and academic growth</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS SECTION -->
+  <section id="skills">
+    <div class="paper">
+      <h2 class="section-title">My Skills</h2>
+      <i class="fa fa-paperclip paperclip"></i>
+      
+      <div class="skill-grid">
+        <div class="skill-item">
+          <h4>💻 Technology</h4>
+          <p style="font-size:0.9rem;margin-top:0.3rem;">Learning coding & digital systems</p>
+        </div>
+        <div class="skill-item">
+          <h4>🎨 Design</h4>
+          <p style="font-size:0.9rem;margin-top:0.3rem;">Creative layouts & visuals</p>
+        </div>
+        <div class="skill-item">
+          <h4>✍️ Writing</h4>
+          <p style="font-size:0.9rem;margin-top:0.3rem;">Clear communication & research</p>
+        </div>
+        <div class="skill-item">
+          <h4>🤝 Teamwork</h4>
+          <p style="font-size:0.9rem;margin-top:0.3rem;">Collaboration & leadership</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS SECTION -->
+  <section id="projects">
+    <div class="paper">
+      <h2 class="section-title">My Projects</h2>
+      <i class="fa fa-paperclip paperclip"></i>
+      
+      <div class="project-card">
+        <h4>🌟 Project Title 1</h4>
+        <p style="margin:0.5rem 0;">Brief description of your project — what it is and what you learned from it.</p>
+        <span class="project-tag">Skill A</span>
+        <span class="project-tag">Skill B</span>
+      </div>
+      
+      <div class="project-card">
+        <h4>🌟 Project Title 2</h4>
+        <p style="margin:0.5rem 0;">Brief description of your project — tools used and your achievements.</p>
+        <span class="project-tag">Design</span>
+        <span class="project-tag">Planning</span>
+      </div>
+      
+      <div class="project-card">
+        <h4>🌟 Future Project</h4>
+        <p style="margin:0.5rem 0;">More projects coming soon as I continue learning and growing!</p>
+        <span class="project-tag">In Progress</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section id="contact">
+    <div class="paper contact-paper">
+      <h2 class="section-title">Let's Connect</h2>
+      
+      <p style="font-size:1.1rem;margin-bottom:2rem;">Thank you for visiting my portfolio! Feel free to reach out.</p>
+      
+      <a href="mailto:your.email@example.com" class="btn">
+        <i class="fa fa-envelope"></i> Email Me
+      </a>
+      <a href="#" class="btn">
+        <i class="fa fa-facebook"></i> Facebook
+      </a>
+      <a href="#" class="btn">
+        <i class="fa fa-instagram"></i> Instagram
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 Jerlyn L. Viloria — All Rights Reserved</p>
+    <p style="margin-top:0.5rem;font-size:0.9rem;">Created with passion 💜</p>
+  </footer>
+
+  <!-- Animation Script -->
+  <script>
+    // Side-slide animation on scroll
+    const papers = document.querySelectorAll('.paper');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    papers.forEach(paper => observer.observe(paper));
+  </script>
+
+</body>
+</html>
