@@ -107,14 +107,6 @@
       color:var(--accent);
       margin-bottom:1.5rem;
     }
-    .years{
-      font-family:monospace;
-      background:var(--tape);
-      display:inline-block;
-      padding:0.3rem 1rem;
-      border-radius:4px;
-      margin-bottom:2rem;
-    }
     .hero-content{display:grid;grid-template-columns:1fr 200px;gap:2rem;align-items:center}
     .hero-img{
       width:100%;
@@ -145,19 +137,70 @@
     .edu-card h3{font-size:1.3rem;margin-bottom:0.5rem}
 
     /* Skills */
-    .skill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:1rem}
-    .skill-item{background:var(--tape);padding:1rem;border-radius:4px;border-left:4px solid var(--bg);transition:transform 0.3s}
-    .skill-item:hover{transform:translateX(8px)}
+    .skill-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:1.2rem;
+      margin-top:1.5rem;
+    }
+    .skill-item{
+      background:var(--tape);
+      padding:1.5rem;
+      border-radius:8px;
+      border-left:5px solid var(--bg);
+      transition:transform 0.3s ease;
+    }
+    .skill-item:hover{
+      transform:translateX(8px);
+    }
+    .skill-item h4{
+      font-weight:bold;
+      font-size:1.1rem;
+      margin-bottom:0.5rem;
+      color:var(--dark);
+    }
+    .skill-item p{
+      font-size:0.9rem;
+      color:var(--bg);
+      opacity:0.8;
+    }
 
     /* Projects */
-    .project-card{background:white;padding:1.5rem;border-radius:4px;margin-bottom:1rem;border:1px solid var(--accent);transition:transform 0.3s}
-    .project-card:hover{transform:translateX(5px)}
-    .project-tag{display:inline-block;background:var(--sticker);color:white;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.8rem;margin:0.3rem 0.3rem 0.3rem 0}
+    .project-card{
+      background:white;
+      padding:1.5rem;
+      border-radius:8px;
+      margin-bottom:1rem;
+      border:2px solid var(--accent);
+      transition:transform 0.3s ease;
+    }
+    .project-card:hover{
+      transform:translateX(5px);
+    }
+    .project-tag{
+      display:inline-block;
+      background:var(--sticker);
+      color:white;
+      padding:0.3rem 0.7rem;
+      border-radius:4px;
+      font-size:0.8rem;
+      margin:0.3rem 0.5rem 0.3rem 0;
+    }
 
     /* Contact */
     .contact-paper{background:var(--dark);color:white;text-align:center}
     .contact-paper .section-title{color:var(--tape);border-bottom-color:var(--tape)}
-    .btn{display:inline-block;padding:0.8rem 2rem;background:var(--accent);color:white;text-decoration:none;border-radius:4px;font-weight:bold;margin:0.5rem;transition:transform 0.2s}
+    .btn{
+      display:inline-block;
+      padding:0.8rem 2rem;
+      background:var(--accent);
+      color:white;
+      text-decoration:none;
+      border-radius:8px;
+      font-weight:bold;
+      margin:0.5rem;
+      transition:transform 0.2s ease;
+    }
     .btn:hover{transform:translateX(5px)}
 
     /* Footer */
@@ -194,7 +237,6 @@
       <h1 class="portfolio-title">Portfolio</h1>
       <h2 class="name-display">Jerlyn L. Viloria</h2>
       <p class="sub-name">Student & Creator</p>
-      <p class="years">2024 — 2025</p>
       
       <div class="hero-content">
         <div class="about-text">
@@ -203,6 +245,7 @@
           <a href="#about" class="btn">Get to know me ↓</a>
         </div>
         <div class="hero-img">
+          <!-- ✅ YOUR PHOTO WILL SHOW HERE -->
           <img src="profile.jpg" alt="Jerlyn L. Viloria" />
         </div>
       </div>
@@ -233,7 +276,6 @@
         <h3>🎓 Your School / University</h3>
         <p><strong>Your Course / Program</strong></p>
         <p style="margin-top:0.5rem;">Currently studying and developing skills in technology, design, and digital solutions.</p>
-        <p style="margin-top:0.5rem;font-style:italic;">Year: 2024 — Present</p>
       </div>
       
       <div class="edu-card" style="margin-top:1rem;background:var(--sticker)">
@@ -253,20 +295,28 @@
       
       <div class="skill-grid">
         <div class="skill-item">
-          <h4>💻 Technology</h4>
-          <p style="font-size:0.9rem;margin-top:0.3rem;">Learning coding & digital systems</p>
+          <h4>💻 System Creation</h4>
+          <p>Designing and developing functional systems that solve real-world problems.</p>
         </div>
         <div class="skill-item">
-          <h4>🎨 Design</h4>
-          <p style="font-size:0.9rem;margin-top:0.3rem;">Creative layouts & visuals</p>
+          <h4>🌐 Web Development</h4>
+          <p>Building responsive, modern, and accessible websites and web applications.</p>
         </div>
         <div class="skill-item">
-          <h4>✍️ Writing</h4>
-          <p style="font-size:0.9rem;margin-top:0.3rem;">Clear communication & research</p>
+          <h4>🎨 Digital Design</h4>
+          <p>Creating professional graphics, layouts, and visual content.</p>
         </div>
         <div class="skill-item">
-          <h4>🤝 Teamwork</h4>
-          <p style="font-size:0.9rem;margin-top:0.3rem;">Collaboration & leadership</p>
+          <h4>📝 Research & Writing</h4>
+          <p>Conducting studies, documentation, and clear academic communication.</p>
+        </div>
+        <div class="skill-item">
+          <h4>📊 Database Management</h4>
+          <p>Organizing and managing data efficiently and securely.</p>
+        </div>
+        <div class="skill-item">
+          <h4>🤝 Teamwork & Leadership</h4>
+          <p>Collaborating with others and contributing to group success.</p>
         </div>
       </div>
     </div>
@@ -279,22 +329,24 @@
       <i class="fa fa-paperclip paperclip"></i>
       
       <div class="project-card">
-        <h4>🌟 Project Title 1</h4>
-        <p style="margin:0.5rem 0;">Brief description of your project — what it is and what you learned from it.</p>
-        <span class="project-tag">Skill A</span>
-        <span class="project-tag">Skill B</span>
+        <h4>🌟 Web & System Projects</h4>
+        <p style="margin:0.5rem 0;">Building functional websites and information systems to help people and organizations.</p>
+        <span class="project-tag">HTML</span>
+        <span class="project-tag">CSS</span>
+        <span class="project-tag">JavaScript</span>
+        <span class="project-tag">Database</span>
       </div>
       
       <div class="project-card">
-        <h4>🌟 Project Title 2</h4>
-        <p style="margin:0.5rem 0;">Brief description of your project — tools used and your achievements.</p>
-        <span class="project-tag">Design</span>
-        <span class="project-tag">Planning</span>
+        <h4>🌟 Design & Digital Content</h4>
+        <p style="margin:0.5rem 0;">Creating graphics, layouts, and visual materials for academic and personal use.</p>
+        <span class="project-tag">Graphics</span>
+        <span class="project-tag">Editing</span>
       </div>
       
       <div class="project-card">
-        <h4>🌟 Future Project</h4>
-        <p style="margin:0.5rem 0;">More projects coming soon as I continue learning and growing!</p>
+        <h4>🌟 Future Projects</h4>
+        <p style="margin:0.5rem 0;">More projects coming soon as I continue learning and growing in technology!</p>
         <span class="project-tag">In Progress</span>
       </div>
     </div>
@@ -321,15 +373,13 @@
 
   <!-- FOOTER -->
   <footer>
-    <p>© 2025 Jerlyn L. Viloria — All Rights Reserved</p>
+    <p>© 2026 Jerlyn L. Viloria — All Rights Reserved</p>
     <p style="margin-top:0.5rem;font-size:0.9rem;">Created with passion 💜</p>
   </footer>
 
   <!-- Animation Script -->
   <script>
-    // Side-slide animation on scroll
     const papers = document.querySelectorAll('.paper');
-    
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -337,7 +387,6 @@
         }
       });
     }, { threshold: 0.1 });
-    
     papers.forEach(paper => observer.observe(paper));
   </script>
 
