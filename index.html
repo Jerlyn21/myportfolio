@@ -1,394 +1,247 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jerlyn L. Viloria — Portfolio</title>
-  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:'Georgia',serif}
-    :root{
-      --bg:#7B2CBF;
-      --paper:#FAF5FF;
-      --accent:#9D4EDD;
-      --dark:#2D0C5E;
-      --tape:#E0AAFF;
-      --sticker:#C77DFF;
-    }
-    html{scroll-behavior:smooth}
-    body{background:var(--bg);color:var(--dark);line-height:1.6;overflow-x:hidden}
-
-    /* Navigation */
-    nav{position:fixed;top:0;width:100%;background:rgba(123,44,191,0.95);z-index:999;padding:1rem 2rem}
-    .nav-links{display:flex;gap:2rem;list-style:none;justify-content:center;flex-wrap:wrap}
-    .nav-links a{color:white;text-decoration:none;font-weight:bold;transition:color 0.3s}
-    .nav-links a:hover{color:var(--tape)}
-
-    section{padding:6rem 2rem;max-width:900px;margin:0 auto}
-
-    /* Paper Card Style */
-    .paper{
-      background:var(--paper);
-      border-radius:4px;
-      padding:2.5rem;
-      margin-bottom:3rem;
-      position:relative;
-      box-shadow:6px 6px 0 rgba(0,0,0,0.15);
-      opacity:0;
-      transform:translateX(-50px);
-      transition:all 0.8s ease-out;
-    }
-    .paper.visible{
-      opacity:1;
-      transform:translateX(0);
-    }
-    .paper:nth-child(even){
-      transform:translateX(50px);
-    }
-    .paper:nth-child(even).visible{
-      transform:translateX(0);
-    }
-    .paper::before{
-      content:'';
-      position:absolute;
-      top:-10px;
-      left:50%;
-      transform:translateX(-50%);
-      width:80%;
-      height:20px;
-      background:linear-gradient(90deg,transparent,var(--tape),var(--tape),transparent);
-      opacity:0.8;
-      border-radius:2px;
-    }
-    .paper.hero-paper{
-      background:linear-gradient(180deg, #F3E8FF 0%, var(--paper) 100%);
-      border-top:4px dashed var(--accent);
-      transform:translateY(30px);
-    }
-    .paper.hero-paper.visible{
-      transform:translateY(0);
-    }
-    .sticker{
-      position:absolute;
-      background:var(--sticker);
-      color:white;
-      padding:0.4rem 1rem;
-      border-radius:4px;
-      font-weight:bold;
-      transform:rotate(-8deg);
-      box-shadow:2px 2px 0 rgba(0,0,0,0.1);
-    }
-    .paperclip{
-      position:absolute;
-      top:1rem;
-      right:1rem;
-      font-size:1.5rem;
-      color:var(--accent);
-      opacity:0.6;
-    }
-
-    /* Hero Section */
-    .hero-paper{text-align:center;padding-top:4rem}
-    .hero-paper .sticker{top:1rem;left:1rem}
-    .portfolio-title{
-      font-size:clamp(2.5rem,8vw,4rem);
-      font-style:italic;
-      color:var(--dark);
-      margin-bottom:0.5rem;
-    }
-    .name-display{
-      font-size:clamp(1.8rem,5vw,2.8rem);
-      font-weight:bold;
-      color:var(--bg);
-      margin-bottom:0.3rem;
-    }
-    .sub-name{
-      font-size:1.2rem;
-      color:var(--accent);
-      margin-bottom:1.5rem;
-    }
-    .hero-content{display:grid;grid-template-columns:1fr 200px;gap:2rem;align-items:center}
-    .hero-img{
-      width:100%;
-      aspect-ratio:3/4;
-      border:4px solid white;
-      box-shadow:4px 4px 0 rgba(123,44,191,0.3);
-      overflow:hidden;
-      transform:rotate(3deg);
-    }
-    .hero-img img{width:100%;height:100%;object-fit:cover}
-
-    /* Section Headers */
-    .section-title{
-      font-size:clamp(2rem,6vw,3rem);
-      font-style:italic;
-      color:var(--bg);
-      margin-bottom:1.5rem;
-      border-bottom:2px solid var(--accent);
-      padding-bottom:0.5rem;
-      display:inline-block;
-    }
-
-    /* About */
-    .about-text p{margin-bottom:1rem;font-size:1.05rem}
-
-    /* Education */
-    .edu-card{background:var(--accent);color:white;padding:2rem;border-radius:8px;margin-top:1rem}
-    .edu-card h3{font-size:1.3rem;margin-bottom:0.5rem}
-
-    /* Skills */
-    .skill-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-      gap:1.2rem;
-      margin-top:1.5rem;
-    }
-    .skill-item{
-      background:var(--tape);
-      padding:1.5rem;
-      border-radius:8px;
-      border-left:5px solid var(--bg);
-      transition:transform 0.3s ease;
-    }
-    .skill-item:hover{
-      transform:translateX(8px);
-    }
-    .skill-item h4{
-      font-weight:bold;
-      font-size:1.1rem;
-      margin-bottom:0.5rem;
-      color:var(--dark);
-    }
-    .skill-item p{
-      font-size:0.9rem;
-      color:var(--bg);
-      opacity:0.8;
-    }
-
-    /* Projects */
-    .project-card{
-      background:white;
-      padding:1.5rem;
-      border-radius:8px;
-      margin-bottom:1rem;
-      border:2px solid var(--accent);
-      transition:transform 0.3s ease;
-    }
-    .project-card:hover{
-      transform:translateX(5px);
-    }
-    .project-tag{
-      display:inline-block;
-      background:var(--sticker);
-      color:white;
-      padding:0.3rem 0.7rem;
-      border-radius:4px;
-      font-size:0.8rem;
-      margin:0.3rem 0.5rem 0.3rem 0;
-    }
-
-    /* Contact */
-    .contact-paper{background:var(--dark);color:white;text-align:center}
-    .contact-paper .section-title{color:var(--tape);border-bottom-color:var(--tape)}
-    .btn{
-      display:inline-block;
-      padding:0.8rem 2rem;
-      background:var(--accent);
-      color:white;
-      text-decoration:none;
-      border-radius:8px;
-      font-weight:bold;
-      margin:0.5rem;
-      transition:transform 0.2s ease;
-    }
-    .btn:hover{transform:translateX(5px)}
-
-    /* Footer */
-    footer{text-align:center;padding:2rem;color:rgba(255,255,255,0.7)}
-
-    /* Responsive */
-    @media(max-width:600px){
-      .hero-content{grid-template-columns:1fr}
-      .hero-img{max-width:200px;margin:0 auto}
-      .paper{padding:1.5rem}
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Jerlyn L. Viloria — Portfolio</title>
+<link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;600;700;800&family=Patrick+Hand&family=Indie+Flower&display=swap" rel="stylesheet">
+<style>
+:root{--bg-dark:#2D1B4E;--purple-primary:#7B2CBF;--purple-light:#9D4EDD;--purple-lighter:#C77DFF;--accent:#E0AAFF;--card:#FAF5FF;--card-light:#FFF8FF;--text-dark:#2D0C5E;--violet-name:#7B2CBF;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Poppins',sans-serif;background:radial-gradient(circle at 10% 10%,rgba(199,125,255,.4) 0 8%,transparent 9%),radial-gradient(circle at 90% 18%,rgba(123,44,191,.4) 0 9%,transparent 10%),radial-gradient(circle at 15% 85%,rgba(224,170,255,.35) 0 7%,transparent 8%),linear-gradient(180deg,#2D1B4E 0,#452980 48%,#2D1B4E 100%);color:var(--text-dark);overflow-x:hidden;}
+.handwritten-title{font-family:'Indie Flower',cursive;letter-spacing:1px;}
+.handwritten-body{font-family:'Patrick Hand',cursive;line-height:1.7;}
+.ribbon{position:absolute;width:90px;height:24px;background:linear-gradient(90deg,#C77DFF,#9D4EDD);border-radius:999px;transform:rotate(-12deg);box-shadow:2px 2px 0 rgba(0,0,0,.15);}
+.ribbon::after{content:'';position:absolute;right:-12px;top:50%;transform:translateY(-50%);border-left:12px solid #9D4EDD;border-top:12px solid transparent;border-bottom:12px solid transparent;}
+.paper-clip{position:absolute;top:12px;right:12px;font-size:20px;color:var(--purple-primary);opacity:.7;}
+.sticker{position:absolute;background:var(--purple-lighter);color:#fff;padding:.35rem .9rem;border-radius:999px;font-weight:bold;transform:rotate(4deg);box-shadow:2px 2px 0 rgba(0,0,0,.15);font-size:.9rem;}
+.notebook-card{background:var(--card);border-radius:18px;box-shadow:0 10px 35px rgba(123,44,191,.35),inset 0 1px 0 rgba(255,255,255,.1);border:3px solid rgba(199,125,255,.5);position:relative;overflow:hidden;}
+.notebook-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background-image:repeating-linear-gradient(transparent,transparent 28px,rgba(123,44,191,.08) 28px,rgba(123,44,191,.08) 29px);pointer-events:none;}
+.notebook-card::after{content:'';position:absolute;left:18px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,rgba(123,44,191,.25),rgba(123,44,191,.05));}
+.hanging-wrapper{position:relative;transform-origin:top center;animation:hangSwing 3.5s ease-in-out infinite;}
+.hanging-string{width:3px;height:40px;background:linear-gradient(to bottom,#999,#666);margin:0 auto;border-radius:2px;}
+.hanging-pin{width:16px;height:16px;background:var(--purple-lighter);border-radius:50%;margin:0 auto -8px;box-shadow:0 2px 4px rgba(0,0,0,.3);position:relative;z-index:10;}
+@keyframes hangSwing{0%,100%{transform:rotate(-2.5deg);}50%{transform:rotate(2.5deg);}}
+@keyframes zoomPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.03);}}
+.star{position:absolute;color:var(--purple-lighter);animation:twinkle 2s ease-in-out infinite;}
+@keyframes twinkle{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.7);}}
+.nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(45,27,78,.88);backdrop-filter:blur(10px);padding:1rem 2rem;border-bottom:2px solid var(--purple-primary);}
+.nav-links a{color:#fff;text-decoration:none;font-weight:600;padding:.5rem 1rem;border-radius:8px;transition:.3s;}
+.nav-links a:hover{background:var(--purple-primary);color:var(--accent);transform:translateY(-2px);}
+.btn-purple{background:var(--purple-primary);color:#fff;font-weight:800;padding:.75rem 2rem;border-radius:12px;border:none;cursor:pointer;transition:.3s;box-shadow:4px 4px 0 rgba(0,0,0,.2);}
+.btn-purple:hover{transform:translate(-3px,-3px);box-shadow:7px 7px 0 rgba(0,0,0,.2);background:var(--purple-light);}
+.btn-accent{background:var(--accent);color:var(--text-dark);font-weight:800;padding:.75rem 2rem;border-radius:12px;border:none;cursor:pointer;transition:.3s;box-shadow:4px 4px 0 rgba(0,0,0,.2);}
+.btn-accent:hover{transform:translate(-3px,-3px);box-shadow:7px 7px 0 rgba(0,0,0,.2);}
+.fade-in{opacity:0;transform:translateY(40px);transition:.8s ease-out;}
+.fade-in.visible{opacity:1;transform:translateY(0);}
+.project-card{background:var(--card-light);border-radius:16px;overflow:hidden;transition:.3s;border:2px solid transparent;}
+.project-card:hover{border-color:var(--purple-lighter);transform:translateY(-6px);box-shadow:0 10px 30px rgba(199,125,255,.2);}
+.skill-icon{width:60px;height:60px;background:var(--card-light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:800;color:var(--purple-lighter);border:2px solid var(--purple-primary);transition:.3s;}
+.skill-icon:hover{background:var(--purple-primary);color:#fff;transform:scale(1.1);}
+.edu-card,.info-card{background:var(--card-light);border-radius:12px;padding:1.5rem;margin-bottom:1rem;border-left:4px solid var(--purple-primary);transition:.3s;}
+.edu-card:hover,.info-card:hover{transform:translateX(8px);border-left-color:var(--purple-lighter);}
+.school-name{color:var(--violet-name);font-weight:bold;}
+.info-row{display:flex;justify-content:space-between;padding:.5rem 0;border-bottom:1px solid rgba(157,78,221,.2);}
+.info-row:last-child{border-bottom:none;}
+.info-label{color:var(--purple-primary);font-weight:600;}
+footer{background:var(--card);padding:3rem;text-align:center;border-top:3px solid var(--purple-primary);color:var(--text-dark);}
+@media(max-width:768px){.hero-grid{grid-template-columns:1fr;}}
+</style>
 </head>
 <body>
-
-  <!-- Navigation -->
-  <nav>
-    <ul class="nav-links">
-      <li><a href="#home">HOME</a></li>
-      <li><a href="#about">ABOUT</a></li>
-      <li><a href="#education">EDUCATION</a></li>
-      <li><a href="#skills">SKILLS</a></li>
-      <li><a href="#projects">PROJECTS</a></li>
-      <li><a href="#contact">CONTACT</a></li>
-    </ul>
-  </nav>
-
-  <!-- HERO SECTION -->
-  <section id="home">
-    <div class="paper hero-paper">
-      <span class="sticker">CREATIVE</span>
-      <i class="fa fa-paperclip paperclip"></i>
-      
-      <h1 class="portfolio-title">Portfolio</h1>
-      <h2 class="name-display">Jerlyn L. Viloria</h2>
-      <p class="sub-name">Student & Creator</p>
-      
-      <div class="hero-content">
-        <div class="about-text">
-          <p>Welcome to my portfolio! I'm <strong>Jerlyn L. Viloria</strong>, a dedicated student passionate about learning, creating, and growing in the field of technology and design.</p>
-          <p>I love turning ideas into beautiful and functional works — combining creativity with purpose.</p>
-          <a href="#about" class="btn">Get to know me ↓</a>
-        </div>
-        <div class="hero-img">
-          <!-- ✅ YOUR PHOTO WILL SHOW HERE -->
-          <img src="profile.jpg" alt="Jerlyn L. Viloria" />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ABOUT SECTION -->
-  <section id="about">
-    <div class="paper">
-      <h2 class="section-title">I'm Jerlyn</h2>
-      <i class="fa fa-paperclip paperclip"></i>
-      
-      <div class="about-text">
-        <p>Hello! I'm <strong>Jerlyn L. Viloria</strong>. A student who believes that creativity and hard work can make anything possible.</p>
-        <p>I am currently pursuing my studies and building skills in various areas — from technology to creative design. Every project I take on is a chance to learn something new and improve my craft.</p>
-        <p>My goal is to grow, create meaningful work, and contribute something valuable to the world.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- EDUCATION SECTION -->
-  <section id="education">
-    <div class="paper">
-      <h2 class="section-title">Education</h2>
-      <i class="fa fa-paperclip paperclip"></i>
-      
-      <div class="edu-card">
-        <h3>🎓 Your School / University</h3>
-        <p><strong>Your Course / Program</strong></p>
-        <p style="margin-top:0.5rem;">Currently studying and developing skills in technology, design, and digital solutions.</p>
-      </div>
-      
-      <div class="edu-card" style="margin-top:1rem;background:var(--sticker)">
-        <h3>📚 Achievements</h3>
-        <p>• Dedication to learning and continuous improvement</p>
-        <p>• Building projects and practical skills</p>
-        <p>• Passionate about personal and academic growth</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- SKILLS SECTION -->
-  <section id="skills">
-    <div class="paper">
-      <h2 class="section-title">My Skills</h2>
-      <i class="fa fa-paperclip paperclip"></i>
-      
-      <div class="skill-grid">
-        <div class="skill-item">
-          <h4>💻 System Creation</h4>
-          <p>Designing and developing functional systems that solve real-world problems.</p>
-        </div>
-        <div class="skill-item">
-          <h4>🌐 Web Development</h4>
-          <p>Building responsive, modern, and accessible websites and web applications.</p>
-        </div>
-        <div class="skill-item">
-          <h4>🎨 Digital Design</h4>
-          <p>Creating professional graphics, layouts, and visual content.</p>
-        </div>
-        <div class="skill-item">
-          <h4>📝 Research & Writing</h4>
-          <p>Conducting studies, documentation, and clear academic communication.</p>
-        </div>
-        <div class="skill-item">
-          <h4>📊 Database Management</h4>
-          <p>Organizing and managing data efficiently and securely.</p>
-        </div>
-        <div class="skill-item">
-          <h4>🤝 Teamwork & Leadership</h4>
-          <p>Collaborating with others and contributing to group success.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROJECTS SECTION -->
-  <section id="projects">
-    <div class="paper">
-      <h2 class="section-title">My Projects</h2>
-      <i class="fa fa-paperclip paperclip"></i>
-      
-      <div class="project-card">
-        <h4>🌟 Web & System Projects</h4>
-        <p style="margin:0.5rem 0;">Building functional websites and information systems to help people and organizations.</p>
-        <span class="project-tag">HTML</span>
-        <span class="project-tag">CSS</span>
-        <span class="project-tag">JavaScript</span>
-        <span class="project-tag">Database</span>
-      </div>
-      
-      <div class="project-card">
-        <h4>🌟 Design & Digital Content</h4>
-        <p style="margin:0.5rem 0;">Creating graphics, layouts, and visual materials for academic and personal use.</p>
-        <span class="project-tag">Graphics</span>
-        <span class="project-tag">Editing</span>
-      </div>
-      
-      <div class="project-card">
-        <h4>🌟 Future Projects</h4>
-        <p style="margin:0.5rem 0;">More projects coming soon as I continue learning and growing in technology!</p>
-        <span class="project-tag">In Progress</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT SECTION -->
-  <section id="contact">
-    <div class="paper contact-paper">
-      <h2 class="section-title">Let's Connect</h2>
-      
-      <p style="font-size:1.1rem;margin-bottom:2rem;">Thank you for visiting my portfolio! Feel free to reach out.</p>
-      
-      <a href="mailto:your.email@example.com" class="btn">
-        <i class="fa fa-envelope"></i> Email Me
-      </a>
-      <a href="#" class="btn">
-        <i class="fa fa-facebook"></i> Facebook
-      </a>
-      <a href="#" class="btn">
-        <i class="fa fa-instagram"></i> Instagram
-      </a>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <p>© 2026 Jerlyn L. Viloria — All Rights Reserved</p>
-    <p style="margin-top:0.5rem;font-size:0.9rem;">Created with passion 💜</p>
-  </footer>
-
-  <!-- Animation Script -->
-  <script>
-    const papers = document.querySelectorAll('.paper');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.1 });
-    papers.forEach(paper => observer.observe(paper));
-  </script>
-
+<nav class="nav">
+<div class="max-w-7xl mx-auto flex justify-between items-center">
+<span class="handwritten-title text-2xl text-purple-300">JLV</span>
+<div class="nav-links hidden md:flex gap-4">
+<a href="#home">Home</a><a href="#about">My Info</a><a href="#education">Education</a><a href="#projects">Projects</a><a href="#skills">Skills</a><a href="#contact">Contact</a>
+</div>
+<button class="md:hidden text-2xl text-white"><i class="fa fa-bars"></i></button>
+</div>
+</nav>
+<section id="home" class="min-h-screen pt-28 pb-16 px-6 relative overflow-hidden">
+<span class="star absolute top-32 left-10 text-2xl">★</span>
+<span class="star absolute top-48 right-20 text-xl" style="animation-delay:.5s">✦</span>
+<span class="star absolute bottom-40 left-1/4 text-lg" style="animation-delay:1s">★</span>
+<span class="star absolute top-72 left-1/4 text-sm" style="animation-delay:1.5s">✧</span>
+<div class="max-w-7xl mx-auto">
+<div class="grid md:grid-cols-2 gap-12 items-center hero-grid">
+<div class="fade-in">
+<p class="handwritten-body text-purple-200 mb-4 text-lg">👋 Hi, I'm</p>
+<h1 class="handwritten-title text-6xl md:text-8xl leading-none mb-4 text-white">JERLYN<br><span class="text-purple-300">L. VILORIA</span></h1>
+<p class="text-lg text-purple-200 mb-2">IT Student • Creator • Developer</p>
+<p class="text-md text-purple-300 mb-4">🎓 <span class="school-name">Nueva Vizcaya State University</span></p>
+<div class="bg-purple-100 text-purple-900 rounded-2xl p-4 inline-block transform rotate-3 shadow-lg mb-8">
+<p class="handwritten-body text-lg font-bold">Creating with Passion 💜✨</p>
+</div>
+<div class="flex flex-wrap gap-4">
+<a href="#about" class="btn-purple"><i class="fa fa-user mr-2"></i> My Info</a>
+<a href="#contact" class="btn-accent">Connect With Me <i class="fa fa-arrow-right ml-1"></i></a>
+</div>
+</div>
+<div class="flex justify-center fade-in" style="animation-delay:.2s">
+<div class="hanging-wrapper">
+<div class="hanging-pin"></div><div class="hanging-string"></div>
+<div class="notebook-card p-6 w-80 relative">
+<div class="ribbon" style="top:10px;left:-12px"></div>
+<i class="fa fa-paperclip paper-clip"></i>
+<span class="sticker" style="top:10px;right:10px">CREATIVE</span>
+<img src="profile.jpg" alt="Jerlyn L. Viloria" class="w-full h-80 object-cover rounded-xl mb-4 border-4 border-purple-400">
+<h3 class="handwritten-title text-2xl text-center text-purple-700">JERLYN</h3>
+<p class="text-center text-purple-600 handwritten-body">IT Student • Creator</p>
+<p class="text-sm text-center text-purple-500 mt-2 handwritten-body"><span class="school-name">Nueva Vizcaya State University</span> 💜</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="about" class="py-20 px-6">
+<div class="max-w-3xl mx-auto">
+<div class="text-center mb-12 fade-in">
+<h2 class="handwritten-title text-5xl text-purple-300 mb-4">MY INFORMATION</h2>
+<p class="text-purple-200 handwritten-body">Get to know me better</p>
+</div>
+<div class="notebook-card p-8 fade-in relative">
+<div class="ribbon" style="top:14px;left:-15px"></div>
+<i class="fa fa-paperclip paper-clip"></i>
+<p class="text-lg mb-6 leading-relaxed handwritten-body text-purple-900">Hi! I am <strong class="text-purple-700">Jerlyn Lucas Viloria</strong>, currently taking <strong>Information Technology</strong> at <strong class="school-name">Nueva Vizcaya State University</strong>.</p>
+<div class="info-card">
+<h4 class="handwritten-title text-purple-700 text-xl mb-3"><i class="fa fa-id-card-o mr-2"></i> Personal Details</h4>
+<div class="info-row"><span class="info-label">Full Name</span><span>Jerlyn Lucas Viloria</span></div>
+<div class="info-row"><span class="info-label">Birthday</span><span>September 21, 2005</span></div>
+<div class="info-row"><span class="info-label">Status</span><span class="text-purple-500">Single 💜</span></div>
+<div class="info-row"><span class="info-label">Course</span><span>Information Technology</span></div>
+<div class="info-row"><span class="info-label">University</span><span class="school-name">Nueva Vizcaya State University</span></div>
+</div>
+<p class="mt-6 text-lg text-purple-700 font-semibold handwritten-body">🎯 Goal: To grow, learn, and build meaningful digital solutions that help others.</p>
+</div>
+</div>
+</section>
+<section id="education" class="py-20 px-6 bg-purple-950/30">
+<div class="max-w-4xl mx-auto">
+<div class="text-center mb-12 fade-in">
+<h2 class="handwritten-title text-5xl text-purple-300 mb-4">MY EDUCATION</h2>
+<p class="text-purple-200 handwritten-body">Where I learned and grew</p>
+</div>
+<div class="space-y-4">
+<div class="edu-card fade-in relative">
+<div class="ribbon" style="top:10px;left:-12px"></div>
+<h4 class="handwritten-title text-purple-700 text-xl"><i class="fa fa-graduation-cap mr-2"></i> College</h4>
+<p class="font-bold text-lg school-name">Nueva Vizcaya State University</p>
+<p>Information Technology</p>
+<p class="text-sm text-purple-200 mt-1">Currently Studying</p>
+</div>
+<div class="edu-card fade-in relative" style="animation-delay:.1s">
+<div class="ribbon" style="top:10px;left:-12px"></div>
+<h4 class="handwritten-title text-purple-700 text-xl"><i class="fa fa-school mr-2"></i> High School</h4>
+<p class="font-bold text-lg school-name">Solano High School</p>
+<p>Completed Junior & Senior High School</p>
+<p class="text-sm text-purple-200 mt-1">Solano, Nueva Vizcaya</p>
+</div>
+<div class="edu-card fade-in relative" style="animation-delay:.2s">
+<div class="ribbon" style="top:10px;left:-12px"></div>
+<h4 class="handwritten-title text-purple-700 text-xl"><i class="fa fa-book mr-2"></i> Elementary</h4>
+<p class="font-bold text-lg school-name">Solano East Central School</p>
+<p>Completed Elementary Education</p>
+<p class="text-sm text-purple-200 mt-1">Solano, Nueva Vizcaya</p>
+</div>
+</div>
+</div>
+</section>
+<section id="projects" class="py-20 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-12 fade-in">
+<h2 class="handwritten-title text-5xl text-purple-300 mb-4">FEATURED PROJECTS</h2>
+<p class="text-purple-200 handwritten-body">My works & creations</p>
+</div>
+<div class="grid md:grid-cols-3 gap-8">
+<div class="fade-in">
+<div class="hanging-wrapper">
+<div class="hanging-pin"></div><div class="hanging-string"></div>
+<div class="project-card p-5 relative">
+<div class="ribbon" style="top:10px;left:-12px"></div>
+<div class="bg-purple-900/50 rounded-lg h-40 flex items-center justify-center mb-4">
+<i class="fa fa-code text-5xl text-purple-300"></i>
+</div>
+<h3 class="font-bold text-xl mb-2 handwritten-title text-purple-700">Web Development</h3>
+<p class="text-purple-200 text-sm mb-3 handwritten-body">Building beautiful and functional websites.</p>
+<span class="text-purple-300 text-sm font-semibold">HTML • CSS • JS</span>
+</div>
+</div>
+</div>
+<div class="fade-in" style="animation-delay:.15s">
+<div class="hanging-wrapper">
+<div class="hanging-pin"></div><div class="hanging-string"></div>
+<div class="project-card p-5 relative">
+<div class="ribbon" style="top:10px;left:-12px"></div>
+<div class="bg-purple-800/50 rounded-lg h-40 flex items-center justify-center mb-4">
+<i class="fa fa-database text-5xl text-purple-300"></i>
+</div>
+<h3 class="font-bold text-xl mb-2 handwritten-title text-purple-700">Systems & Data</h3>
+<p class="text-purple-200 text-sm mb-3 handwritten-body">Organizing information and building systems.</p>
+<span class="text-purple-300 text-sm font-semibold">Database • Design</span>
+</div>
+</div>
+</div>
+<div class="fade-in" style="animation-delay:.3s">
+<div class="hanging-wrapper">
+<div class="hanging-pin"></div><div class="hanging-string"></div>
+<div class="project-card p-5 relative">
+<div class="ribbon" style="top:10px;left:-12px"></div>
+<div class="bg-purple-700/50 rounded-lg h-40 flex items-center justify-center mb-4">
+<i class="fa fa-paint-brush text-5xl text-purple-300"></i>
+</div>
+<h3 class="font-bold text-xl mb-2 handwritten-title text-purple-700">Digital Design</h3>
+<p class="text-purple-200 text-sm mb-3 handwritten-body">Creative layouts, graphics, and visuals.</p>
+<span class="text-purple-300 text-sm font-semibold">Design • Editing</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="skills" class="py-20 px-6 bg-purple-950/30">
+<div class="max-w-5xl mx-auto">
+<div class="text-center mb-12 fade-in">
+<h2 class="handwritten-title text-5xl text-purple-300 mb-4">MY SKILLS</h2>
+<p class="text-purple-200 handwritten-body">Tools & skills I'm growing</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-6 fade-in">
+<div class="flex flex-col items-center gap-2"><div class="skill-icon">H</div><span class="font-semibold text-white">HTML</span></div>
+<div class="flex flex-col items-center gap-2"><div class="skill-icon">C</div><span class="font-semibold text-white">CSS</span></div>
+<div class="flex flex-col items-center gap-2"><div class="skill-icon">JS</div><span class="font-semibold text-white">JavaScript</span></div>
+<div class="flex flex-col items-center gap-2"><div class="skill-icon"><i class="fa fa-picture-o"></i></div><span class="font-semibold text-white">Design</span></div>
+<div class="flex flex-col items-center gap-2"><div class="skill-icon"><i class="fa fa-code"></i></div><span class="font-semibold text-white">Coding</span></div>
+<div class="flex flex-col items-center gap-2"><div class="skill-icon"><i class="fa fa-book"></i></div><span class="font-semibold text-white">Research</span></div>
+<div class="flex flex-col items-center gap-2"><div class="skill-icon"><i class="fa fa-laptop"></i></div><span class="font-semibold text-white">Systems</span></div>
+<div class="flex flex-col items-center gap-2"><div class="skill-icon"><i class="fa fa-users"></i></div><span class="font-semibold text-white">Teamwork</span></div>
+</div>
+</div>
+</section>
+<section id="contact" class="py-20 px-6">
+<div class="max-w-2xl mx-auto text-center fade-in">
+<h2 class="handwritten-title text-5xl text-purple-300 mb-4">Let's Connect! 💜</h2>
+<p class="text-lg text-purple-200 mb-8 handwritten-body">Let's learn, grow, and create together!</p>
+<div class="flex flex-wrap justify-center gap-4">
+<a href="mailto:your.email@example.com" class="btn-purple"><i class="fa fa-envelope mr-2"></i> Email Me</a>
+<a href="#" class="btn-accent"><i class="fa fa-facebook mr-2"></i> Facebook</a>
+<a href="#" class="bg-purple-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-purple-500 transition-all shadow-lg"><i class="fa fa-github mr-2"></i> GitHub</a>
+</div>
+</div>
+</section>
+<footer>
+<p class="handwritten-title text-2xl text-purple-700 mb-2">JERLYN LUCAS VILORIA</p>
+<p class="text-purple-600">IT Student • <span class="school-name">Nueva Vizcaya State University</span></p>
+<p class="mt-4 text-sm text-purple-500">© 2026 — Created with 💜 and passion</p>
+</footer>
+<script>
+const observer=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible');});},{threshold:.1});
+document.querySelectorAll('.fade-in').forEach(x=>{observer.observe(x);});
+const menuBtn=document.querySelector('button.md\\:hidden');
+const navLinks=document.querySelector('.nav-links');
+menuBtn?.addEventListener('click',()=>{navLinks.classList.toggle('hidden');navLinks.classList.toggle('absolute');navLinks.classList.toggle('top-full');navLinks.classList.toggle('left-0');navLinks.classList.toggle('w-full');navLinks.classList.toggle('bg-black/90');navLinks.classList.toggle('flex-col');navLinks.classList.toggle('p-4');});
+</script>
 </body>
 </html>
